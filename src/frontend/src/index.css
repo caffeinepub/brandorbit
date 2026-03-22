@@ -1,0 +1,193 @@
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/assets/fonts/Satoshi.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 83 100% 43%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 338 100% 56%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 83 100% 43%;
+    --radius: 0.75rem;
+
+    /* Brand tokens */
+    --brand-lime: oklch(83% 0.22 122);
+    --brand-pink: oklch(58% 0.26 358);
+    --brand-blue: oklch(67% 0.17 220);
+    --brand-dark: oklch(0% 0 0);
+    --brand-card: oklch(13% 0 0);
+    --brand-card2: oklch(17% 0 0);
+    --brand-gray: oklch(64% 0 0);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Satoshi", "Plus Jakarta Sans", system-ui, sans-serif;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Bricolage Grotesque", "General Sans", system-ui, sans-serif;
+  }
+}
+
+/* Brand gradient text */
+.gradient-text-lime {
+  background: linear-gradient(135deg, #aadd00, #00aaee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-pink {
+  background: linear-gradient(135deg, #ff1f6b, #aadd00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-full {
+  background: linear-gradient(135deg, #aadd00 0%, #00aaee 50%, #ff1f6b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Orbital animation */
+@keyframes orbit1 {
+  from {
+    transform: rotate(0deg) translateX(120px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(120px) rotate(-360deg);
+  }
+}
+@keyframes orbit2 {
+  from {
+    transform: rotate(120deg) translateX(160px) rotate(-120deg);
+  }
+  to {
+    transform: rotate(480deg) translateX(160px) rotate(-480deg);
+  }
+}
+@keyframes orbit3 {
+  from {
+    transform: rotate(240deg) translateX(200px) rotate(-240deg);
+  }
+  to {
+    transform: rotate(600deg) translateX(200px) rotate(-600deg);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(170, 221, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(170, 221, 0, 0.6);
+  }
+}
+
+.orbit-1 {
+  animation: orbit1 8s linear infinite;
+}
+.orbit-2 {
+  animation: orbit2 12s linear infinite;
+}
+.orbit-3 {
+  animation: orbit3 16s linear infinite;
+}
+.float-anim {
+  animation: float 4s ease-in-out infinite;
+}
+.pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Card glow effects */
+.card-glow-lime {
+  box-shadow: 0 0 0 1px rgba(170, 221, 0, 0.2), 0 4px 40px
+    rgba(170, 221, 0, 0.08);
+}
+.card-glow-pink {
+  box-shadow: 0 0 0 1px rgba(255, 31, 107, 0.2), 0 4px 40px
+    rgba(255, 31, 107, 0.08);
+}
+.card-glow-blue {
+  box-shadow: 0 0 0 1px rgba(0, 170, 238, 0.2), 0 4px 40px
+    rgba(0, 170, 238, 0.08);
+}
+
+.card-glow-lime:hover {
+  box-shadow: 0 0 0 1px rgba(170, 221, 0, 0.4), 0 8px 60px
+    rgba(170, 221, 0, 0.15);
+}
+.card-glow-pink:hover {
+  box-shadow: 0 0 0 1px rgba(255, 31, 107, 0.4), 0 8px 60px
+    rgba(255, 31, 107, 0.15);
+}
+.card-glow-blue:hover {
+  box-shadow: 0 0 0 1px rgba(0, 170, 238, 0.4), 0 8px 60px
+    rgba(0, 170, 238, 0.15);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aadd00;
+}
