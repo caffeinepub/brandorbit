@@ -153,28 +153,32 @@ const TESTIMONIALS = [
 
 const TEAM = [
   {
-    name: "Arjun Mehta",
+    name: "Madhav Sahu",
     role: "Founder & CEO",
-    img: "/assets/generated/team-arjun.dim_400x400.jpg",
+    img: "/assets/uploads/1763502946693-1.jpg",
     color: "lime",
+    showDetails: true,
   },
   {
-    name: "Sneha Gupta",
+    name: "",
     role: "Head of Digital Strategy",
-    img: "/assets/generated/team-sneha.dim_400x400.jpg",
+    img: "",
     color: "pink",
+    showDetails: false,
   },
   {
-    name: "Rohan Das",
+    name: "",
     role: "Creative Director",
-    img: "/assets/generated/team-rohan.dim_400x400.jpg",
+    img: "",
     color: "blue",
+    showDetails: false,
   },
   {
-    name: "Kavya Singh",
+    name: "",
     role: "SEO & Analytics Lead",
-    img: "/assets/generated/team-kavya.dim_400x400.jpg",
+    img: "",
     color: "lime",
+    showDetails: false,
   },
 ];
 
@@ -797,7 +801,7 @@ function Team() {
             const c = member.color as ColorKey;
             return (
               <motion.div
-                key={member.name}
+                key={member.role}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -805,25 +809,47 @@ function Team() {
                 className={`group bg-[#111] rounded-2xl overflow-hidden transition-all duration-300 ${glowClass(c)}`}
                 data-ocid={`team.item.${i + 1}`}
               >
-                <div className="relative overflow-hidden h-52">
-                  <img
-                    src={member.img}
-                    alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div
-                    className="absolute bottom-0 left-0 right-0 h-1/2"
-                    style={{
-                      background: "linear-gradient(to top, #111, transparent)",
-                    }}
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-display font-bold">{member.name}</h3>
-                  <p className="text-xs mt-0.5" style={colorStyle(c)}>
-                    {member.role}
-                  </p>
-                </div>
+                {member.showDetails ? (
+                  // Full card: photo + name + role
+                  <>
+                    <div className="relative overflow-hidden h-52">
+                      <img
+                        src={member.img}
+                        alt={member.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div
+                        className="absolute bottom-0 left-0 right-0 h-1/2"
+                        style={{
+                          background:
+                            "linear-gradient(to top, #111, transparent)",
+                        }}
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-display font-bold">{member.name}</h3>
+                      <p className="text-xs mt-0.5" style={colorStyle(c)}>
+                        {member.role}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  // Role-only card: icon placeholder + role text
+                  <div className="flex flex-col items-center justify-center py-10 px-4 gap-4">
+                    <div
+                      className="w-16 h-16 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: `${COLOR[c]}18` }}
+                    >
+                      <Users size={28} style={colorStyle(c)} />
+                    </div>
+                    <p
+                      className="text-sm font-semibold text-center"
+                      style={colorStyle(c)}
+                    >
+                      {member.role}
+                    </p>
+                  </div>
+                )}
               </motion.div>
             );
           })}
