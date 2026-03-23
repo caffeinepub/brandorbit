@@ -27,7 +27,6 @@ import {
   Phone,
   Search,
   Share2,
-  Star,
   Target,
   TrendingUp,
   Twitter,
@@ -41,7 +40,7 @@ import { toast } from "sonner";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const NAV_LINKS = ["Services", "Portfolio", "Testimonials", "Team", "Contact"];
+const NAV_LINKS = ["Services", "Team", "Contact"];
 
 const STATS = [
   { value: "500+", label: "Clients" },
@@ -89,73 +88,11 @@ const SERVICES = [
   },
 ];
 
-const PORTFOLIO = [
-  {
-    industry: "FinTech",
-    client: "TechStart Finance",
-    result: "300%",
-    metric: "Lead Increase",
-    color: "lime",
-    desc: "Complete digital overhaul including SEO, PPC, and content marketing strategy.",
-  },
-  {
-    industry: "E-commerce",
-    client: "ShopNova",
-    result: "5x",
-    metric: "ROAS",
-    color: "pink",
-    desc: "Performance marketing campaigns across Google, Meta, and programmatic channels.",
-  },
-  {
-    industry: "SaaS Platform",
-    client: "CloudFlow",
-    result: "200%",
-    metric: "Organic Traffic",
-    color: "blue",
-    desc: "Technical SEO, content strategy, and conversion rate optimisation.",
-  },
-  {
-    industry: "D2C Fashion",
-    client: "ThreadsBy",
-    result: "10x",
-    metric: "Social Following",
-    color: "lime",
-    desc: "Viral social media campaigns and influencer marketing with measurable growth.",
-  },
-];
-
-const TESTIMONIALS = [
-  {
-    name: "Rahul Sharma",
-    role: "CEO, TechStart",
-    quote:
-      "BrandOrbit transformed our digital presence completely. Our leads tripled in just 6 months.",
-    avatar: "RS",
-    color: "lime",
-  },
-  {
-    name: "Priya Patel",
-    role: "Founder, StyleCo",
-    quote:
-      "Our sales doubled within 3 months of partnering with BrandOrbit. Truly exceptional results.",
-    avatar: "PP",
-    color: "pink",
-  },
-  {
-    name: "Amit Kumar",
-    role: "MD, FinanceHub",
-    quote:
-      "Best ROI we've ever seen from any marketing agency. The team is world-class.",
-    avatar: "AK",
-    color: "blue",
-  },
-];
-
 const TEAM = [
   {
     name: "Madhav Sahu",
     role: "Founder & CEO",
-    img: "/assets/uploads/1763502946693-1.jpg",
+    img: "/assets/generated/founder-madhav-cropped.dim_400x480.jpg",
     color: "lime",
     showDetails: true,
   },
@@ -182,21 +119,22 @@ const TEAM = [
   },
 ];
 
+const INSTAGRAM_URL =
+  "https://www.instagram.com/brandorbit._?igsh=eGl1bmpxbXc4dWN5";
+
 const SOCIAL_LINKS = [
-  { Icon: Twitter, color: "blue", name: "Twitter" },
-  { Icon: Instagram, color: "pink", name: "Instagram" },
-  { Icon: Linkedin, color: "blue", name: "LinkedIn" },
-  { Icon: Facebook, color: "lime", name: "Facebook" },
-] as const;
+  { Icon: Twitter, color: "blue", name: "Twitter", href: undefined },
+  { Icon: Instagram, color: "pink", name: "Instagram", href: INSTAGRAM_URL },
+  { Icon: Linkedin, color: "blue", name: "LinkedIn", href: undefined },
+  { Icon: Facebook, color: "lime", name: "Facebook", href: undefined },
+];
 
 const FOOTER_SOCIAL = [
-  { Icon: Twitter, name: "Twitter" },
-  { Icon: Instagram, name: "Instagram" },
-  { Icon: Linkedin, name: "LinkedIn" },
-  { Icon: Facebook, name: "Facebook" },
-] as const;
-
-const STARS = [1, 2, 3, 4, 5];
+  { Icon: Twitter, name: "Twitter", href: undefined },
+  { Icon: Instagram, name: "Instagram", href: INSTAGRAM_URL },
+  { Icon: Linkedin, name: "LinkedIn", href: undefined },
+  { Icon: Facebook, name: "Facebook", href: undefined },
+];
 
 // ─── Color helpers ────────────────────────────────────────────────────────────
 
@@ -210,9 +148,6 @@ type ColorKey = keyof typeof COLOR;
 
 function colorStyle(c: ColorKey) {
   return { color: COLOR[c] };
-}
-function bgColorStyle(c: ColorKey) {
-  return { backgroundColor: COLOR[c] };
 }
 function glowClass(c: ColorKey) {
   return c === "lime"
@@ -506,11 +441,11 @@ function Hero() {
                 className="rounded-full px-8 font-bold text-base border-white/20 text-white hover:bg-white/5"
                 onClick={() =>
                   document
-                    .getElementById("portfolio")
+                    .getElementById("services")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
               >
-                View Our Work
+                Our Services
               </Button>
             </div>
           </motion.div>
@@ -623,156 +558,6 @@ function Services() {
   );
 }
 
-// ─── Portfolio Section ────────────────────────────────────────────────────────
-
-function Portfolio() {
-  return (
-    <section id="portfolio" className="bg-black py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <p
-            className="text-sm font-semibold tracking-widest uppercase mb-3"
-            style={colorStyle("pink")}
-          >
-            Case Studies
-          </p>
-          <h2 className="font-display text-4xl sm:text-5xl font-extrabold">
-            Our <span className="gradient-text-pink">Work</span>
-          </h2>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {PORTFOLIO.map((p, i) => {
-            const c = p.color as ColorKey;
-            return (
-              <motion.div
-                key={p.client}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={`group bg-[#111] rounded-2xl p-8 transition-all duration-300 ${glowClass(c)}`}
-                data-ocid={`portfolio.item.${i + 1}`}
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <Badge
-                      className="text-xs font-semibold mb-2"
-                      style={{
-                        color: COLOR[c],
-                        backgroundColor: `${COLOR[c]}15`,
-                        border: `1px solid ${COLOR[c]}30`,
-                      }}
-                    >
-                      {p.industry}
-                    </Badge>
-                    <h3 className="font-display text-xl font-bold">
-                      {p.client}
-                    </h3>
-                  </div>
-                  <div className="text-right">
-                    <div
-                      className="font-display text-4xl font-extrabold"
-                      style={colorStyle(c)}
-                    >
-                      {p.result}
-                    </div>
-                    <div className="text-xs text-white/50">{p.metric}</div>
-                  </div>
-                </div>
-                <p className="text-sm text-white/50 leading-relaxed">
-                  {p.desc}
-                </p>
-                <div
-                  className="mt-4 flex items-center gap-1 text-sm font-semibold"
-                  style={colorStyle(c)}
-                >
-                  View Case Study <ArrowRight size={14} className="ml-1" />
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Testimonials Section ─────────────────────────────────────────────────────
-
-function Testimonials() {
-  return (
-    <section id="testimonials" className="bg-[#0a0a0a] py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <p
-            className="text-sm font-semibold tracking-widest uppercase mb-3"
-            style={colorStyle("blue")}
-          >
-            Client Love
-          </p>
-          <h2 className="font-display text-4xl sm:text-5xl font-extrabold">
-            What They <span className="gradient-text-full">Say</span>
-          </h2>
-        </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {TESTIMONIALS.map((t, i) => {
-            const c = t.color as ColorKey;
-            return (
-              <motion.div
-                key={t.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className={`bg-[#111] rounded-2xl p-6 transition-all duration-300 ${glowClass(c)}`}
-                data-ocid={`testimonials.item.${i + 1}`}
-              >
-                <div className="flex gap-0.5 mb-4">
-                  {STARS.map((n) => (
-                    <Star
-                      key={n}
-                      size={14}
-                      fill={COLOR[c]}
-                      style={colorStyle(c)}
-                    />
-                  ))}
-                </div>
-                <p className="text-white/70 leading-relaxed mb-6 text-sm italic">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-black"
-                    style={bgColorStyle(c)}
-                  >
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <div className="font-semibold text-sm">{t.name}</div>
-                    <div className="text-xs text-white/40">{t.role}</div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ─── Team Section ─────────────────────────────────────────────────────────────
 
 function Team() {
@@ -816,7 +601,7 @@ function Team() {
                       <img
                         src={member.img}
                         alt={member.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       />
                       <div
                         className="absolute bottom-0 left-0 right-0 h-1/2"
@@ -1038,19 +823,19 @@ function Contact() {
               {
                 icon: Mail,
                 label: "Email Us",
-                value: "hello@brandorbit.in",
+                value: "info.brandorbit.in@gmail.com",
                 color: "lime" as ColorKey,
               },
               {
                 icon: Phone,
                 label: "Call Us",
-                value: "+91 98765 43210",
+                value: "+91 9648292852",
                 color: "pink" as ColorKey,
               },
               {
                 icon: MapPin,
                 label: "Visit Us",
-                value: "Mumbai, Maharashtra, India",
+                value: "Kanpur, Uttar Pradesh, India",
                 color: "blue" as ColorKey,
               },
             ].map(({ icon: Icon, label, value, color }) => (
@@ -1078,21 +863,39 @@ function Contact() {
                 Follow Our Journey
               </p>
               <div className="flex gap-3">
-                {SOCIAL_LINKS.map(({ Icon, color, name }) => (
-                  <button
-                    type="button"
-                    key={name}
-                    aria-label={name}
-                    className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:scale-110"
-                    style={{
-                      backgroundColor: `${COLOR[color]}15`,
-                      color: COLOR[color],
-                    }}
-                    data-ocid="contact.social.button"
-                  >
-                    <Icon size={18} />
-                  </button>
-                ))}
+                {SOCIAL_LINKS.map(({ Icon, color, name, href }) => {
+                  const sharedStyle = {
+                    backgroundColor: `${COLOR[color as ColorKey]}15`,
+                    color: COLOR[color as ColorKey],
+                  };
+                  const sharedClass =
+                    "w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:scale-110";
+                  return href ? (
+                    <a
+                      key={name}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={name}
+                      className={sharedClass}
+                      style={sharedStyle}
+                      data-ocid="contact.social.button"
+                    >
+                      <Icon size={18} />
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      key={name}
+                      aria-label={name}
+                      className={sharedClass}
+                      style={sharedStyle}
+                      data-ocid="contact.social.button"
+                    >
+                      <Icon size={18} />
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </motion.div>
@@ -1124,16 +927,31 @@ function Footer() {
               solutions that drive real, measurable growth.
             </p>
             <div className="flex gap-3 mt-5">
-              {FOOTER_SOCIAL.map(({ Icon, name }) => (
-                <button
-                  type="button"
-                  key={name}
-                  aria-label={name}
-                  className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-all"
-                >
-                  <Icon size={16} />
-                </button>
-              ))}
+              {FOOTER_SOCIAL.map(({ Icon, name, href }) => {
+                const sharedClass =
+                  "w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-all";
+                return href ? (
+                  <a
+                    key={name}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={name}
+                    className={sharedClass}
+                  >
+                    <Icon size={16} />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    key={name}
+                    aria-label={name}
+                    className={sharedClass}
+                  >
+                    <Icon size={16} />
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -1239,8 +1057,6 @@ export default function App() {
         <Hero />
         <StatsBar />
         <Services />
-        <Portfolio />
-        <Testimonials />
         <Team />
         <Contact />
       </main>
