@@ -121,19 +121,20 @@ const TEAM = [
 
 const INSTAGRAM_URL =
   "https://www.instagram.com/brandorbit._?igsh=eGl1bmpxbXc4dWN5";
+const FACEBOOK_URL = "https://www.facebook.com/share/1CQXJAbavH/";
 
 const SOCIAL_LINKS = [
   { Icon: Twitter, color: "blue", name: "Twitter", href: undefined },
   { Icon: Instagram, color: "pink", name: "Instagram", href: INSTAGRAM_URL },
   { Icon: Linkedin, color: "blue", name: "LinkedIn", href: undefined },
-  { Icon: Facebook, color: "lime", name: "Facebook", href: undefined },
+  { Icon: Facebook, color: "lime", name: "Facebook", href: FACEBOOK_URL },
 ];
 
 const FOOTER_SOCIAL = [
   { Icon: Twitter, name: "Twitter", href: undefined },
   { Icon: Instagram, name: "Instagram", href: INSTAGRAM_URL },
   { Icon: Linkedin, name: "LinkedIn", href: undefined },
-  { Icon: Facebook, name: "Facebook", href: undefined },
+  { Icon: Facebook, name: "Facebook", href: FACEBOOK_URL },
 ];
 
 // ─── Color helpers ────────────────────────────────────────────────────────────
@@ -650,24 +651,32 @@ function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     service: "",
     message: "",
   });
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    toast.success("Message sent! We'll get back to you within 24 hours.", {
+    const waPhone = "919648292852";
+    const text = encodeURIComponent(
+      `New BrandOrbit Enquiry 🚀
+
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Service: ${formData.service}
+Message: ${formData.message}`,
+    );
+    window.open(`https://wa.me/${waPhone}?text=${text}`, "_blank");
+    toast.success("Redirecting to WhatsApp!", {
       style: {
         background: "#111",
         border: "1px solid #AADD0040",
         color: "#fff",
       },
     });
-    setFormData({ name: "", email: "", service: "", message: "" });
+    setFormData({ name: "", email: "", phone: "", service: "", message: "" });
   };
 
   return (
@@ -747,6 +756,26 @@ function Contact() {
               </div>
               <div>
                 <label
+                  htmlFor="contact-phone"
+                  className="block text-sm font-medium text-white/70 mb-1.5"
+                >
+                  Phone Number
+                </label>
+                <Input
+                  id="contact-phone"
+                  data-ocid="contact.phone.input"
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={(e) =>
+                    setFormData((p) => ({ ...p, phone: e.target.value }))
+                  }
+                  placeholder="+91 98765 43210"
+                  className="bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30 focus:border-[#AADD00]"
+                />
+              </div>
+              <div>
+                <label
                   htmlFor="contact-service"
                   className="block text-sm font-medium text-white/70 mb-1.5"
                 >
@@ -801,13 +830,12 @@ function Contact() {
               <Button
                 data-ocid="contact.submit_button"
                 type="submit"
-                disabled={loading}
                 size="lg"
                 className="w-full rounded-full font-bold text-black text-base"
-                style={{ backgroundColor: loading ? "#888" : COLOR.lime }}
+                style={{ backgroundColor: COLOR.lime }}
               >
-                {loading ? "Sending..." : "Send Message"}
-                {!loading && <ArrowRight size={18} className="ml-2" />}
+                Send on WhatsApp
+                <ArrowRight size={18} className="ml-2" />
               </Button>
             </form>
           </motion.div>
